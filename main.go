@@ -20,7 +20,7 @@ func main() {
 
 	c := util.Fetch(urls, int(*threadLimit))
 	h := util.HashMD5(c)
-	util.PrintHashMap(h, os.Stdout)
+	util.WriteHash(h, os.Stdout)
 }
 
 func urlAppendPrefix(urls []string) []string {

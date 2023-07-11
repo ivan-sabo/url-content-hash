@@ -6,12 +6,15 @@ import (
 	"io"
 )
 
+// Hash holds a result of hash function of content of the specified URL
 type Hash struct {
 	URL  string
 	Hash string
 	Err  error
 }
 
+// HashMD5 calculates MD5 hash of the content of received Content object and pushes the result to
+// returning Hash channel
 func HashMD5(c <-chan Content) <-chan Hash {
 	h := make(chan Hash, 5)
 
@@ -40,7 +43,8 @@ func HashMD5(c <-chan Content) <-chan Hash {
 	return h
 }
 
-func PrintHashMap(h <-chan Hash, w io.Writer) {
+// WriteHash writes the received data of Hash object to a provided writer
+func WriteHash(h <-chan Hash, w io.Writer) {
 	for s := range h {
 		if s.Err == nil {
 			fmt.Fprintf(w, "%s\t%s\n", s.URL, s.Hash)

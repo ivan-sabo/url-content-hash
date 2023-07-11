@@ -6,12 +6,15 @@ import (
 	"sync"
 )
 
+// Content holds result of the http get request to a specified URL
 type Content struct {
 	URL     string
 	Content string
 	Err     error
 }
 
+// Fetch makes concurrent http get requests to provided urls and transmits results to returning Content channel
+// It also limits thread count accorting threadLimit parameter
 func Fetch(urls []string, threadLimit int) <-chan Content {
 	c := make(chan Content, 5)
 	guard := make(chan struct{}, threadLimit)
